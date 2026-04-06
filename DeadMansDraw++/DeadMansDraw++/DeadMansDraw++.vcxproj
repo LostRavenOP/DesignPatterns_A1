@@ -131,11 +131,29 @@
     <ClCompile Include="DeadMansDraw++.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Suits\CannonCard.cpp" />
+    <ClCompile Include="Suits\ChestCard.cpp" />
+    <ClCompile Include="Suits\HookCard.cpp" />
+    <ClCompile Include="Suits\KeyCard.cpp" />
+    <ClCompile Include="Suits\KrakenCard.cpp" />
+    <ClCompile Include="Suits\MapCard.cpp" />
+    <ClCompile Include="Suits\MermaidCard.cpp" />
+    <ClCompile Include="Suits\OracleCard.cpp" />
+    <ClCompile Include="Suits\SwordCard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Suits\CannonCard.h" />
+    <ClInclude Include="Suits\ChestCard.h" />
+    <ClInclude Include="Suits\HookCard.h" />
+    <ClInclude Include="Suits\KeyCard.h" />
+    <ClInclude Include="Suits\KrakenCard.h" />
+    <ClInclude Include="Suits\MapCard.h" />
+    <ClInclude Include="Suits\MermaidCard.h" />
+    <ClInclude Include="Suits\OracleCard.h" />
+    <ClInclude Include="Suits\SwordCard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
