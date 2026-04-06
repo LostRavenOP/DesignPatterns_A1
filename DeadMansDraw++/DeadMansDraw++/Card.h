@@ -5,8 +5,7 @@ class Game;
 class Player;
 
 // All possible card suits in the game
-enum CardType
-{
+enum CardType{
     Cannon,
     Chest,
     Key,
