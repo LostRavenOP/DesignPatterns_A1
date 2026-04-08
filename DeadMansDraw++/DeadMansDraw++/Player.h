@@ -27,8 +27,11 @@ class Player {
 		// Adds a card to the player's play area
 		bool playCard(Card* card, Game& game);
 
-		// Adds a card to the player's bank
-		void addToBank(const Card& card);
+		// Helper for adding play area to the player's bank
+		void addToBank(Card* card);
+
+		// Adds all cards from the play area to the bank, then clears the play area
+		void bankPlayArea(Game& game);
 
 		// Check if the player has busted
 		bool isBust() const;

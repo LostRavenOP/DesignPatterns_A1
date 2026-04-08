@@ -6,20 +6,12 @@ Card::Card(CardType type, int value)
 {
 }
 
-// Destructor
-Card::~Card() {
-}
-
-// Return card type
-const CardType& Card::type() const {
+// Return card type — return by value, matching the header declaration
+CardType Card::type() const {
     return _type;
 }
 
 // Return card value
 int Card::value() const {
     return _value;
-}
-
-// Default behaviour (does nothing)
-void Card::willAddToBank(Game& game, Player& player) {
 }

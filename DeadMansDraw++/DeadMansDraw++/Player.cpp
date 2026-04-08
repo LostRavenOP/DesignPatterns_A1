@@ -3,11 +3,10 @@
 #include "Card.h"
 #include <iostream>
 #include <vector>
+#include <numeric>
 
 Player::Player(std::string name) : _name(std::move(name)) {
 }
-
-Player::~Player() = default;
 
 const std::string& Player::name() const
 {
@@ -25,30 +24,25 @@ const CardCollection& Player::getBank() const
 }
 
 bool Player::playCard(Card* card, Game& game) {
-	
-	_playArea.push_back(card);
+    _playArea.push_back(card);
 
     std::cout << "Added card: " << card->str() << std::endl;
     std::cout << "Play area size: " << _playArea.size() << std::endl;
 
-	if (isBust()) {
-		std::cout << name() << " has busted!" << std::endl;
-		return true;
-	}
+    if (isBust()) {
+        std::cout << name() << " has busted!" << std::endl;
+        return true;
+    }
 
-	card->play(game, *this);
+    card->play(game, *this);
 
-	return false;
+    return false;
 }
 
 bool Player::isBust() const {
-
-    for (int i = 0; i < _playArea.size(); i++)
-    {
-        for (int j = i + 1; j < _playArea.size(); j++)
-        {
-            if (_playArea[i]->type() == _playArea[j]->type())
-            {
+    for (size_t i = 0; i < _playArea.size(); i++) {
+        for (size_t j = i + 1; j < _playArea.size(); j++) {
+            if (_playArea[i]->type() == _playArea[j]->type()) {
                 return true;
             }
         }
@@ -56,3 +50,30 @@ bool Player::isBust() const {
     return false;
 }
 
+void Player::addToBank(Card* card) {
+    _bank.push_back(card);
+}
+
+void Player::bankPlayArea(Game& game) {
+    for (Card* card : _playArea) {
+        card->willAddToBank(game, *this);
+        addToBank(card);
+    }
+    clearPlayArea();
+}
+
+void Player::clearPlayArea() {
+    _playArea.clear();
+}
+
+int Player::calcScore() const {
+    int total = 0;
+    for (const Card* card : _bank) {
+        total += card->value();
+    }
+    return total;
+}
+
+int Player::getScore() const {
+    return calcScore();
+}
