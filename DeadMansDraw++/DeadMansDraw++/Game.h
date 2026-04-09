@@ -33,6 +33,9 @@ public:
     // Returns nullptr if discard pile is empty.
     Card* drawFromDiscard();
 
+	// Returns a card to the bottom of the deck (used for abilities that peek at the top card)
+    void returnToDeck(Card* card);
+
     // Returns a pointer to the other player (not the current player)
     Player* getOtherPlayer() const;
 

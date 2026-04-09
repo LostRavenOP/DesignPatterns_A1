@@ -100,6 +100,12 @@ Card* Game::drawFromDiscard() {
     return card;
 }
 
+void Game::returnToDeck(Card* card) {
+    if (card != nullptr) {
+        _deck.push_back(card);
+    }
+}
+
 Player* Game::getCurrentPlayer() const {
     return _players[_currentPlayerIndex];
 }
