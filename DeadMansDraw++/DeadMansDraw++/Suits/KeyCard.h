@@ -9,7 +9,6 @@ class KeyCard : public Card {
 		KeyCard(int value);
 		std::string str() const override;
 		void play(Game& game, Player& player) override;
-		void willAddToBank(Game& game, Player& player) override;
 
 };
 #endif

@@ -22,12 +22,20 @@
 Game::Game()
     : _currentPlayerIndex(0), _turn(1), _round(1)
 {
-    // Randomly pick names from the fixed list
+	// Similar to deck shuffling, use a random number generator to pick two distinct player names
+    std::mt19937 rng{ std::random_device{}() };
+    std::uniform_int_distribution<int> dist(0, 9);
+
+	// List of players to choose from
     std::string names[] = { "Sam", "Billy", "Jen", "Bob", "Sally",
                            "Joe", "Sue", "Sasha", "Tina", "Marge" };
-    // Pick two distinct names
-    int i1 = rand() % 10;
-    int i2 = (i1 + 1 + rand() % 9) % 10;
+
+    // Pick two distinct indices
+    int i1 = dist(rng);
+    int i2;
+    do {
+        i2 = dist(rng);
+    } while (i2 == i1);
 
     _players[0] = new Player(names[i1]);
     _players[1] = new Player(names[i2]);
@@ -160,17 +168,17 @@ void Game::shuffleDeck(CardCollection& cards) {
 
 void Game::printTitle() const {
     std::cout << R"(
-     ______                  _   ___  ___              _
-    |  _  \                | |  |  \/  |             ( )
-    | | | | ___   __ _   __| |  | .  . |  __ _  _ __ |/ ___
-    | | | |/ _ \ / _` | / _` |  | |\/| | / _` || '_ \  / __|
-    | |/ /|  __/| (_| || (_| |  | |  | || (_| || | | | \__ \
-    ______ \___| \__,_| \__,_|  \_|  |_/ \__,_||_| |_| |___/
-    |  _  \                         _      _
-    | | | | _ __  __ _ __      __ _| |_  _| |_
-    | | | || '__|/ _` |\ \ /\ / /|_   _||_   _|
-    | |/ / | |  | (_| | \ V  V /   |_|    |_|
-    |___/  |_|   \__,_|  \_/\_/      
+______                  _   ___  ___              _
+|  _  \                | |  |  \/  |             ( )
+| | | | ___   __ _   __| |  | .  . |  __ _  _ __ |/ ___
+| | | |/ _ \ / _` | / _` |  | |\/| | / _` || '_ \  / __|
+| |/ /|  __/| (_| || (_| |  | |  | || (_| || | | | \__ \
+______ \___| \__,_| \__,_|  \_|  |_/ \__,_||_| |_| |___/
+|  _  \                         _      _
+| | | | _ __  __ _ __      __ _| |_  _| |_
+| | | || '__|/ _` |\ \ /\ / /|_   _||_   _|
+| |/ / | |  | (_| | \ V  V /   |_|    |_|
+|___/  |_|   \__,_|  \_/\_/      
     )" << std::endl;
 }
 
@@ -183,8 +191,8 @@ bool Game::runTurn() {
 
     // Print current player's bank
     std::cout << current->name() << "'s Bank:" << std::endl;
-    current->getBank();
-    std::cout << "| Score: " << current->getScore() << std::endl;
+    current->printBank();
+    std::cout << "| Score: " << current->calcScore() << std::endl;
 
     bool playerBusted = false;
 
@@ -214,7 +222,7 @@ bool Game::runTurn() {
 
         // Print play area
         std::cout << current->name() << "'s Play Area:" << std::endl;
-        current->getPlayArea();
+        current->printPlayArea();
 
         // Ask if the player wants to draw again
         std::cout << "Draw again? (y/n): ";
@@ -246,12 +254,12 @@ void Game::printGameOver() const {
 
     for (int i = 0; i < 2; i++) {
         std::cout << _players[i]->name() << "'s Bank:" << std::endl;
-        _players[i]->getBank();
-        std::cout << "| Score: " << _players[i]->getScore() << std::endl;
+        _players[i]->printBank();
+        std::cout << "| Score: " << _players[i]->calcScore() << std::endl;
     }
 
-    int score0 = _players[0]->getScore();
-    int score1 = _players[1]->getScore();
+    int score0 = _players[0]->calcScore();
+    int score1 = _players[1]->calcScore();
 
     if (score0 > score1) {
         std::cout << _players[0]->name() << " wins!" << std::endl;

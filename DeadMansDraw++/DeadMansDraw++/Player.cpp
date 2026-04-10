@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 #include <numeric>
+#include <map>
+#include <algorithm>
 
 Player::Player(std::string name) : _name(std::move(name)) {
 }
@@ -21,6 +23,46 @@ const CardCollection& Player::getPlayArea() const
 const CardCollection& Player::getBank() const
 {
     return _bank;
+}
+
+void Player::printPlayArea() const {
+
+	// Group cards by suit
+    std::map<CardType, std::vector<Card*>> grouped;
+    for (Card* card : _playArea) {
+        grouped[card->type()].push_back(card);
+    }
+
+	// Print each suit group, sorted by value descending
+    for (auto& pair : grouped) {
+        std::vector<Card*>& cards = pair.second;
+        std::sort(cards.begin(), cards.end(), [](Card* a, Card* b) {
+            return a->value() > b->value();
+            });
+        std::cout << "  ";
+        for (Card* card : cards) {
+            std::cout << card->str() << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+void Player::printBank() const {
+    std::map<CardType, std::vector<Card*>> grouped;
+    for (Card* card : _bank) {
+        grouped[card->type()].push_back(card);
+    }
+    for (auto& pair : grouped) {
+        std::vector<Card*>& cards = pair.second;
+        std::sort(cards.begin(), cards.end(), [](Card* a, Card* b) {
+            return a->value() > b->value();
+            });
+        std::cout << "  ";
+        for (Card* card : cards) {
+            std::cout << card->str() << " ";
+        }
+        std::cout << std::endl;
+    }
 }
 
 bool Player::playCard(Card* card, Game& game) {
@@ -79,8 +121,4 @@ int Player::calcScore() const {
         total += card->value();
     }
     return total;
-}
-
-int Player::getScore() const {
-    return calcScore();
 }

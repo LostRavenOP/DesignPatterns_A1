@@ -29,9 +29,3 @@ void KeyCard::play(Game& game, Player& player) {
         << " from the Discard pile as you moved into your Bank."
         << std::endl;
 }
-
-// When both are present, ChestCard::willAddToBank handles the bonus draw.
-// KeyCard::willAddToBank intentionally does nothing.
-void KeyCard::willAddToBank(Game& game, Player& player) {
-    // Deliberately empty — ChestCard owns the shared ability.
-}

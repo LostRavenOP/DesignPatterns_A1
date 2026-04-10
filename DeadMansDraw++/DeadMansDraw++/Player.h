@@ -24,6 +24,12 @@ class Player {
 		// Returns the player's current bank of cards
 		const CardCollection& getBank() const;
 
+		// Prints the player's current hand of cards, grouped by suit and sorted by value
+		void printPlayArea() const;
+
+		// Prints the player's current bank of cards, grouped by suit and sorted by value
+		void printBank() const;
+
 		// Adds a card to the player's play area
 		bool playCard(Card* card, Game& game);
 
@@ -44,10 +50,6 @@ class Player {
 
 		// Calculates the player's score based on the cards in their bank
 		int calcScore() const;
-
-		// Returns the player's current score (sum of card values in bank)
-		int getScore() const;
-
 
 	private:
 		std::string _name;
