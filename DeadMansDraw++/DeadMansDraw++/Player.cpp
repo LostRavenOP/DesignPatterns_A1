@@ -27,19 +27,19 @@ const CardCollection& Player::getBank() const
 
 void Player::printPlayArea() const {
 
-	// Group cards by suit
+    // Group cards by suit
     std::map<CardType, std::vector<Card*>> grouped;
     for (Card* card : _playArea) {
         grouped[card->type()].push_back(card);
     }
 
-	// Print each suit group, sorted by value descending
+    // Print each suit group, sorted by value descending
     for (auto& pair : grouped) {
         std::vector<Card*>& cards = pair.second;
         std::sort(cards.begin(), cards.end(), [](Card* a, Card* b) {
             return a->value() > b->value();
             });
-        std::cout << "  ";
+        std::cout << "        ";
         for (Card* card : cards) {
             std::cout << card->str() << " ";
         }
@@ -57,7 +57,7 @@ void Player::printBank() const {
         std::sort(cards.begin(), cards.end(), [](Card* a, Card* b) {
             return a->value() > b->value();
             });
-        std::cout << "  ";
+        std::cout << "        ";
         for (Card* card : cards) {
             std::cout << card->str() << " ";
         }
@@ -68,11 +68,8 @@ void Player::printBank() const {
 bool Player::playCard(Card* card, Game& game) {
     _playArea.push_back(card);
 
-    std::cout << "Added card: " << card->str() << std::endl;
-    std::cout << "Play area size: " << _playArea.size() << std::endl;
-
+    // Bust check only — runTurn() is responsible for all bust output
     if (isBust()) {
-        std::cout << name() << " has busted!" << std::endl;
         return true;
     }
 
@@ -115,10 +112,18 @@ void Player::clearPlayArea() {
     _playArea.clear();
 }
 
+// Returns the sum of the highest value card in each suit in the bank
 int Player::calcScore() const {
-    int total = 0;
+    std::map<CardType, int> topValues;
     for (const Card* card : _bank) {
-        total += card->value();
+        auto it = topValues.find(card->type());
+        if (it == topValues.end() || card->value() > it->second) {
+            topValues[card->type()] = card->value();
+        }
+    }
+    int total = 0;
+    for (auto& pair : topValues) {
+        total += pair.second;
     }
     return total;
 }

@@ -21,7 +21,7 @@ void CannonCard::play(Game& game, Player& player) {
     const CardCollection& otherBank = other->getBank();
 
     if (otherBank.empty()) {
-        std::cout << "  No cards in " << other->name() << "'s Bank. Play continues." << std::endl;
+        std::cout << "        No cards in " << other->name() << "'s Bank. Play continues." << std::endl;
         return;
     }
 
@@ -37,16 +37,16 @@ void CannonCard::play(Game& game, Player& player) {
     }
 
     // Display the options to the current player
-    std::cout << "  Discard the top card of any suit from " << other->name() << "'s Bank:" << std::endl;
+    std::cout << "        Discard the top card of any suit from " << other->name() << "'s Bank:" << std::endl;
     std::vector<std::pair<CardType, Card*>> options(topCards.begin(), topCards.end());
     for (int i = 0; i < static_cast<int>(options.size()); i++) {
-        std::cout << "  (" << (i + 1) << ") " << options[i].second->str() << std::endl;
+        std::cout << "        (" << (i + 1) << ") " << options[i].second->str() << std::endl;
     }
 
     // Read a valid choice
     int choice = 0;
     while (choice < 1 || choice > static_cast<int>(options.size())) {
-        std::cout << "  Which card do you pick? ";
+        std::cout << "        Which card do you pick? ";
         std::cin >> choice;
     }
 

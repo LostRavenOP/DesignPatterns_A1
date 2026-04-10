@@ -24,7 +24,7 @@ std::string ChestCard::str() const {
 
 // No immediate effect when drawn
 void ChestCard::play(Game& game, Player& player) {
-    std::cout << "  No immediate effect."
+    std::cout << "        No immediate effect."
         << " If banked with a key, draw as many bonus cards"
         << " from the Discard pile as you moved into your Bank."
         << std::endl;
@@ -43,17 +43,17 @@ void ChestCard::willAddToBank(Game& game, Player& player) {
     // Count how many cards are about to be banked (the full play area)
     int bonusCount = static_cast<int>(playArea.size());
 
-    std::cout << "  Chest and Key activated. Drawing " << bonusCount
+    std::cout << "        Chest and Key activated. Drawing " << bonusCount
         << " bonus card(s) from the Discard pile." << std::endl;
 
     int drawn = 0;
     for (int i = 0; i < bonusCount; i++) {
         Card* bonus = game.drawFromDiscard();
         if (bonus == nullptr) {
-            std::cout << "  No more cards in the Discard pile." << std::endl;
+            std::cout << "        No more cards in the Discard pile." << std::endl;
             break;
         }
-        std::cout << "  Drew bonus card: " << bonus->str() << std::endl;
+        std::cout << "        Drew bonus card: " << bonus->str() << std::endl;
         // Route through playCard so bust-checking and any chained
         // willAddToBank calls are handled correctly
         player.playCard(bonus, game);
@@ -61,6 +61,6 @@ void ChestCard::willAddToBank(Game& game, Player& player) {
     }
 
     if (drawn == 0) {
-        std::cout << "  No cards drawn (Discard pile was empty)." << std::endl;
+        std::cout << "        No cards drawn (Discard pile was empty)." << std::endl;
     }
 }

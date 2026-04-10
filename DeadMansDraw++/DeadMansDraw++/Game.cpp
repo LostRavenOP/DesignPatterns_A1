@@ -22,11 +22,11 @@
 Game::Game()
     : _currentPlayerIndex(0), _turn(1), _round(1)
 {
-	// Similar to deck shuffling, use a random number generator to pick two distinct player names
+    // Similar to deck shuffling, use a random number generator to pick two distinct player names
     std::mt19937 rng{ std::random_device{}() };
     std::uniform_int_distribution<int> dist(0, 9);
 
-	// List of players to choose from
+    // List of players to choose from
     std::string names[] = { "Sam", "Billy", "Jen", "Bob", "Sally",
                            "Joe", "Sue", "Sasha", "Tina", "Marge" };
 
@@ -135,7 +135,7 @@ int Game::getRound() const {
 }
 
 void Game::initialiseDeck() {
-    // Standard suits: values 2–7 (6 cards each)
+    // Standard suits: values 2-7 (6 cards each)
     int standardValues[] = { 2, 3, 4, 5, 6, 7 };
 
     for (int v : standardValues) {
@@ -149,7 +149,7 @@ void Game::initialiseDeck() {
         _deck.push_back(new KrakenCard(v));
     }
 
-    // Mermaid: values 4–9 (higher point value per spec)
+    // Mermaid: values 4-9 (higher point value per spec)
     int mermaidValues[] = { 4, 5, 6, 7, 8, 9 };
     for (int v : mermaidValues) {
         _deck.push_back(new MermaidCard(v));
@@ -167,8 +167,7 @@ void Game::shuffleDeck(CardCollection& cards) {
 }
 
 void Game::printTitle() const {
-    std::cout << R"(
-______                  _   ___  ___              _
+    std::cout << R"(______                  _   ___  ___              _
 |  _  \                | |  |  \/  |             ( )
 | | | | ___   __ _   __| |  | .  . |  __ _  _ __ |/ ___
 | | | |/ _ \ / _` | / _` |  | |\/| | / _` || '_ \  / __|
@@ -194,8 +193,6 @@ bool Game::runTurn() {
     current->printBank();
     std::cout << "| Score: " << current->calcScore() << std::endl;
 
-    bool playerBusted = false;
-
     // Player draws at least one card per turn
     while (true) {
         // Check if deck is empty
@@ -208,15 +205,18 @@ bool Game::runTurn() {
         Card* card = drawCard();
         std::cout << current->name() << " draws a " << card->str() << std::endl;
 
-        // playCard adds to play area, checks bust, calls ability if not bust
         bool busted = current->playCard(card, *this);
 
-        if (busted) {
-            // Move all play area cards to the discard pile
+        // Check isBust() directly as well — a card ability (e.g. Kraken, Sword)
+        // may have triggered a bust internally without playCard() itself returning true
+        if (busted || current->isBust()) {
+            std::cout << current->name() << "'s Play Area:" << std::endl;
+            current->printPlayArea();
+            std::cout << "BUST! " << current->name()
+                << " loses all cards in play area." << std::endl;
             CardCollection& playArea = const_cast<CardCollection&>(current->getPlayArea());
             discardAll(playArea);
             current->clearPlayArea();
-            playerBusted = true;
             break;
         }
 
@@ -225,7 +225,7 @@ bool Game::runTurn() {
         current->printPlayArea();
 
         // Ask if the player wants to draw again
-        std::cout << "Draw again? (y/n): ";
+        std::cout << "\nDraw again? (y/n): ";
         std::string input;
         std::cin >> input;
 

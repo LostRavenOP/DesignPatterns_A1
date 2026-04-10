@@ -16,12 +16,12 @@ std::string KrakenCard::str() const {
 void KrakenCard::play(Game& game, Player& player) {
     const int FORCED_DRAWS = 3;
 
-    std::cout << "  Draw " << FORCED_DRAWS
+    std::cout << "      Draw " << FORCED_DRAWS
         << " cards from the deck and play each:" << std::endl;
 
     for (int i = 0; i < FORCED_DRAWS; i++) {
         if (game.getDeckSize() == 0) {
-            std::cout << "  Deck is empty. Kraken draws end early." << std::endl;
+            std::cout << "      Deck is empty. Kraken draws end early." << std::endl;
             break;
         }
 

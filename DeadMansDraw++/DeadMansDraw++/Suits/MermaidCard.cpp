@@ -14,5 +14,5 @@ std::string MermaidCard::str() const {
 
 // No ability — Mermaids simply have higher point values (4–9 vs 2–7)
 void MermaidCard::play(Game& game, Player& player) {
-    std::cout << "  No effect but Mermaids are worth more." << std::endl;
+    std::cout << "        No effect but Mermaids are worth more." << std::endl;
 }

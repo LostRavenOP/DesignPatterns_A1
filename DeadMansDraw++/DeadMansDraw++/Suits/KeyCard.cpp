@@ -24,7 +24,7 @@ std::string KeyCard::str() const {
 
 // No immediate effect when drawn
 void KeyCard::play(Game& game, Player& player) {
-    std::cout << "  No immediate effect."
+    std::cout << "        No immediate effect."
         << " If banked with a chest, draw as many bonus cards"
         << " from the Discard pile as you moved into your Bank."
         << std::endl;

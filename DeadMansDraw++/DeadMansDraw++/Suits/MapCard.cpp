@@ -29,22 +29,22 @@ void MapCard::play(Game& game, Player& player) {
     }
 
     if (drawn.empty()) {
-        std::cout << "  No cards in the discard. Play continues." << std::endl;
+        std::cout << "        No cards in the discard. Play continues." << std::endl;
         return;
     }
 
     // Display the drawn options
-    std::cout << "  Draw " << drawn.size()
+    std::cout << "        Draw " << drawn.size()
         << " card(s) from the discard and pick one to add to the play area:"
         << std::endl;
     for (int i = 0; i < static_cast<int>(drawn.size()); i++) {
-        std::cout << "  (" << (i + 1) << ") " << drawn[i]->str() << std::endl;
+        std::cout << "        (" << (i + 1) << ") " << drawn[i]->str() << std::endl;
     }
 
     // Read a valid choice
     int choice = 0;
     while (choice < 1 || choice > static_cast<int>(drawn.size())) {
-        std::cout << "  Which card do you pick? ";
+        std::cout << "        Which card do you pick? ";
         std::cin >> choice;
     }
 
