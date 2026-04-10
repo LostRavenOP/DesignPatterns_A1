@@ -30,6 +30,9 @@ class Player {
 		// Helper for adding play area to the player's bank
 		void addToBank(Card* card);
 
+		// Helper for removing a card from the player's bank
+		void removeFromBank(Card* card);
+
 		// Adds all cards from the play area to the bank, then clears the play area
 		void bankPlayArea(Game& game);
 

@@ -54,6 +54,13 @@ void Player::addToBank(Card* card) {
     _bank.push_back(card);
 }
 
+void Player::removeFromBank(Card* card) {
+    auto it = std::find(_bank.begin(), _bank.end(), card);
+    if (it != _bank.end()) {
+        _bank.erase(it);
+    }
+}
+
 void Player::bankPlayArea(Game& game) {
     for (Card* card : _playArea) {
         card->willAddToBank(game, *this);

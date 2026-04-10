@@ -36,6 +36,9 @@ public:
 	// Returns a card to the bottom of the deck (used for abilities that peek at the top card)
     void returnToDeck(Card* card);
 
+	// Returns the number of cards remaining in the deck
+    int getDeckSize() const;
+
     // Returns a pointer to the other player (not the current player)
     Player* getOtherPlayer() const;
 

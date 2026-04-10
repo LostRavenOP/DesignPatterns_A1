@@ -106,6 +106,10 @@ void Game::returnToDeck(Card* card) {
     }
 }
 
+int Game::getDeckSize() const {
+    return static_cast<int>(_deck.size());
+}
+
 Player* Game::getCurrentPlayer() const {
     return _players[_currentPlayerIndex];
 }
