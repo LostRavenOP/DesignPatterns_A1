@@ -193,8 +193,10 @@ bool Game::runTurn() {
     current->printBank();
     std::cout << "| Score: " << current->calcScore() << std::endl;
 
+    bool endTurn = false;
+
     // Player draws at least one card per turn
-    while (true) {
+    while (!endTurn) {
         // Check if deck is empty
         if (_deck.empty()) {
             std::cout << "Deck is empty. Game over." << std::endl;
@@ -207,17 +209,17 @@ bool Game::runTurn() {
 
         bool busted = current->playCard(card, *this);
 
-        // Check isBust() directly as well — a card ability (e.g. Kraken, Sword)
-        // may have triggered a bust internally without playCard() itself returning true
+        // Check bust condition
         if (busted || current->isBust()) {
             std::cout << current->name() << "'s Play Area:" << std::endl;
             current->printPlayArea();
             std::cout << "BUST! " << current->name()
                 << " loses all cards in play area." << std::endl;
+
             CardCollection& playArea = const_cast<CardCollection&>(current->getPlayArea());
             discardAll(playArea);
             current->clearPlayArea();
-            break;
+            break; // end turn
         }
 
         // Print play area
@@ -225,21 +227,31 @@ bool Game::runTurn() {
         current->printPlayArea();
 
         // Ask if the player wants to draw again
-        std::cout << "\nDraw again? (y/n): ";
         std::string input;
-        std::cin >> input;
+        while (true) {
+            std::cout << "\nDraw again? (y/n): ";
+            std::cin >> input;
 
-        if (input != "y") {
-            // Bank all play area cards
-            current->bankPlayArea(*this);
-            break;
+            if (input == "y") {
+                break; // continue outer loop
+            }
+            else if (input == "n") {
+                // Bank all play area cards
+                current->bankPlayArea(*this);
+                std::cout << current->name() << "'s Bank:" << std::endl;
+                current->printBank();
+                endTurn = true;
+                break;
+            }
+            else {
+                std::cout << "Invalid input. Please enter 'y' or 'n'.\n";
+            }
         }
     }
 
     // Advance turn and round counters
     _turn++;
     if (_turn % 2 == 1) {
-        // Both players have gone — new round
         _round++;
     }
 

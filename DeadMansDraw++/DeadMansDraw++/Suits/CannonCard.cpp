@@ -51,7 +51,7 @@ void CannonCard::play(Game& game, Player& player) {
     }
 
     Card* target = options[choice - 1].second;
-    std::cout << "  " << player.name() << " discards " << target->str()
+    std::cout << "        " << player.name() << " discards " << target->str()
         << " from " << other->name() << "'s Bank." << std::endl;
 
     // Remove the chosen card from the other player's bank and send it to the discard pile

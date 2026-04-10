@@ -16,7 +16,7 @@ std::string KrakenCard::str() const {
 void KrakenCard::play(Game& game, Player& player) {
     const int FORCED_DRAWS = 3;
 
-    std::cout << "      Draw " << FORCED_DRAWS
+    std::cout << "        Draw " << FORCED_DRAWS
         << " cards from the deck and play each:" << std::endl;
 
     for (int i = 0; i < FORCED_DRAWS; i++) {
@@ -26,7 +26,7 @@ void KrakenCard::play(Game& game, Player& player) {
         }
 
         Card* card = game.drawCard();
-        std::cout << "  " << player.name() << " draws a " << card->str() << std::endl;
+        std::cout << player.name() << " draws a " << card->str() << std::endl;
 
         // If the player busts mid-Kraken, stop drawing.
         bool busted = player.playCard(card, game);

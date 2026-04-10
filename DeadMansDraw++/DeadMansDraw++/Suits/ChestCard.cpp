@@ -50,7 +50,6 @@ void ChestCard::willAddToBank(Game& game, Player& player) {
     for (int i = 0; i < bonusCount; i++) {
         Card* bonus = game.drawFromDiscard();
         if (bonus == nullptr) {
-            std::cout << "        No more cards in the Discard pile." << std::endl;
             break;
         }
         std::cout << "        Drew bonus card: " << bonus->str() << std::endl;

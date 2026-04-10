@@ -18,11 +18,11 @@ void OracleCard::play(Game& game, Player& player) {
     Card* peeked = game.drawCard();
 
     if (peeked == nullptr) {
-        std::cout << "  The deck is empty. Nothing to peek at." << std::endl;
+        std::cout << "        The deck is empty. Nothing to peek at." << std::endl;
         return;
     }
 
     // Reveal the top card and immediately return it to the deck
-    std::cout << "  The Oracle sees a " << peeked->str() << std::endl;
+    std::cout << "        The Oracle sees a " << peeked->str() << std::endl;
     game.returnToDeck(peeked);
 }
